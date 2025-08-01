@@ -29,11 +29,12 @@ function getAbsurdReply(character) {
     commander: "You breathe like a recruit! Inhale like you're storming a battlefield!",
     granny: "Oh dear, just pinch your nose and think of cookies. That's how I breathe!",
     support: "Please restart your lungs and try again.",
-    flirty: "Blink? Baby, I only blink when I see *you*.",
     depressed: "Blinking... yeah, that's about the only thing I’m good at.",
     philosopher: "Blinking is but the universe reminding you that perception is temporary.",
     enthusiastic: "OMG YES!!! Blink LIKE A LEGEND!!! YOU GOT THIS!!!",
-    yogi: "Close your eyes. Now open them. You have blinked. Welcome to the now."
+    yogi: "Close your eyes. Now open them. You have blinked. Welcome to the now.",
+    "SigmaBoy": "I don’t blink. Real men keep their eyes open through pain.",
+    "ShowOffBoy": "Hey beautiful 👀 Watch me blink twice as fast as you 😉"
   };
   return replies[character];
 }
@@ -47,7 +48,9 @@ function getSeriousReply(character) {
     depressed: "Cooking? That’s rich. I barely microwave sadness.",
     philosopher: "To make biryani is to embrace both chaos and spice.",
     enthusiastic: "YESSSS!!! COOK THAT BIRYANI!!! Add ALL THE SPICES!!! WOOO!!!",
-    yogi: "To cook is to destroy the raw to create peace. Are you ready?"
+    yogi: "To cook is to destroy the raw to create peace. Are you ready?",
+    "SigmaBoy": "I don't eat. I grind.",
+    "ShowOffBoy": "Girl, I make biryani with gold flakes. Want a taste? 😏"
   };
   return replies[character];
 }
