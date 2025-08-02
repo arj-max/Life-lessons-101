@@ -17,7 +17,7 @@ CHARACTER_PROFILES = {
     "Zen Yoga Master": "Use peaceful metaphors, poetic calm advice, and always connect everything to the universe.",
     "Over-Enthusiastic Person": "Be wildly excited about EVERYTHING. Even something stupid. Use caps, emojis, and hype.",
     "Customer Support Agent": "Use formal tone, always say 'Thank you for your query', and give robotic but absurd answers.",
-    "Depressed Person": "Be pessimistic, sarcastic, and existential. Make everything sound pointless and painful."
+    "Depressed Poet": "Be pessimistic, sarcastic, and existential. Make everything sound pointless and painful."
 }
 
 EXAMPLES = """
@@ -55,6 +55,20 @@ Now begin step-by-step instructions to absurdly answer the question above.
 Only return STEP 1. Wait for the user to say 'done' before giving the next step.
 
 {character.upper()} replies:"""
+
+    elif step_number == max_steps:
+        return f"""{instructions}
+
+The user has completed step {step_number - 1}.
+Now generate the FINAL STEP {step_number}. End your reply with "Instruction finished."
+
+Previous steps:
+{context_steps if context_steps else 'Step 1 has been completed.'}
+
+Stay sarcastic and brief. This is the last step.
+
+{character.upper()} replies:"""
+
     else:
         return f"""{instructions}
 
@@ -97,8 +111,10 @@ def ask():
         # Terminate after max_steps
         if step_number > max_steps:
             return jsonify({
-                "response": f"That's it. You're now a certified lunatic at '{user_question}'. Go make your ancestors proud."
-            })
+                "response": "Instruction finished. Want to try something else?",
+                "original_question": previous_question
+    })
+
 
         # Build prompt with improved tone
         prompt = build_prompt(character, user_question, step_number, context_steps)
