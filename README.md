@@ -27,52 +27,38 @@ I created these characters!
 ### Technologies/Components Used
 Software:
 -Frontend: HTML, CSS, JavaScript
+
 -Backend: Flask (Python)
+
 -AI integration: Groq API (LLaMA3 model)
+
 -AI tools used-ChatGPT
+
 -Code Editor- Visual Studio Code
 
 ### Implementation
-For Software:
+For Software:Integrated AI using Groq api key with flask with python..
 
 # Installation
-[commands]
+NIL
 
 # Run
-[commands]
+Run the index.html file
 
 ### Project Documentation
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+<img width="1336" height="715" alt="Screenshot 2025-08-02 074448" src="https://github.com/user-attachments/assets/786eaa1b-9956-41ea-b278-9c31375f69e6" />Code snippet containing character prompts
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+<img width="952" height="601" alt="Screenshot 2025-08-02 075005" src="https://github.com/user-attachments/assets/aa6eb6bd-a066-4144-9baf-8fa97604809d" />Sneak peek to the website
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
-
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
 
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
 
-# Additional Demos
-[Add any extra demo materials/links]
 
-## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
-
----
 Made with ❤️ at TinkerHub Useless Projects 
 
 
