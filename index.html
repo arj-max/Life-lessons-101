@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Useless Life Coach</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Absurd Advice Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Who do you want to be your instructor today?</h1>
-  <div id="characters">
-    <button onclick="selectCharacter('commander')">Commander</button>
-    <button onclick="selectCharacter('granny')">Granny</button>
-    <button onclick="selectCharacter('support')">Support Agent</button>
-    <button onclick="selectCharacter('depressed')">Depressed</button>
-    <button onclick="selectCharacter('philosopher')">Philosopher</button>
-    <button onclick="selectCharacter('enthusiastic')">Enthusiastic</button>
-    <button onclick="selectCharacter('yogi')">Yogi</button>
-    <button onclick="selectCharacter('SigmaBoy')">Sigma Boy</button>
-    <button onclick="selectCharacter('ShowOffBoy')">Show-Off Boy</button>
-  </div>
+  <div class="chat-container">
+    <div class="header">
+  <h1>LIFE LESSONS 101</h1>
+  <p class="tagline">– Solution to all unsolved mysteries in life –</p>
+</div>
 
-  <div id="interaction" style="display:none;">
-    <input type="text" id="userInput" placeholder="Ask something absurd like 'how to blink'">
-    <button onclick="getResponse()">Get Response</button>
-    <p id="response"></p>
+
+    <div id="chatBox" class="chat-box"></div>
+
+    <!-- Character select -->
+    <div class="custom-select-wrapper">
+      <label for="characterSelect">🎭 Choose Instructor</label>
+      <select id="characterSelect">
+        <option value="" disabled selected>Select your instructor</option>
+        <option value="Sweet Granny">Sweet Granny</option>
+        <option value="Drill Sergeant">Drill Sergeant</option>
+        <option value="Sigma Boy">Sigma Boy</option>
+        <option value="Show-Off">Show-Off</option>
+        <option value="Philosophical Stoner">Philosophical Stoner</option>
+        <option value="Zen Yoga Master">Zen Yoga Master</option>
+        <option value="Over-Enthusiastic Person">Over-Enthusiastic Person</option>
+        <option value="Customer Support Agent">Customer Support Agent</option>
+        <option value="Depressed">Depressed</option>
+      </select>
+    </div>
+
+    <!-- Chat input and buttons -->
+    <div class="chat-input-wrapper">
+      <input type="text" id="userInput" placeholder="Send a message..." autocomplete="off" />
+      <button onclick="sendMessage()">Send</button>
+      <button id="doneButton" onclick="sendDone()" style="display: none;">Done ✅</button>
+    </div>
   </div>
 
   <script src="script.js"></script>

@@ -1,56 +1,101 @@
-let currentCharacter = null;
+let stepNumber = 1;
+let contextSteps = "";
+let currentQuestion = "";
+let waitingForDone = false;
 
-function selectCharacter(charName) {
-  currentCharacter = charName;
-  document.getElementById('interaction').style.display = 'block';
-}
+// Unified message append function
+function appendMessage(message, isUser) {
+  const chatBox = document.getElementById("chatBox");
+  const messageElement = document.createElement("div");
+  messageElement.className = isUser ? "user-message" : "bot-message";
+  chatBox.appendChild(messageElement);
 
-function getResponse() {
-  const input = document.getElementById("userInput").value.toLowerCase();
-  const absurdWords = ["breathe", "blink", "smile", "stand", "drink", "walk"];
-  const isAbsurd = absurdWords.some(word => input.includes(word));
-  let response = "";
-
-  if (!currentCharacter) {
-    response = "Pick a character first!";
-  } else if (isAbsurd) {
-    // Funny responses for absurd questions
-    response = getAbsurdReply(currentCharacter);
-  } else {
-    // Funny responses for serious questions
-    response = getSeriousReply(currentCharacter);
+  let index = 0;
+  function typeWriter() {
+    if (index < message.length) {
+      messageElement.textContent += message.charAt(index);
+      index++;
+      setTimeout(typeWriter, 20);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
   }
 
-  document.getElementById("response").innerText = response;
+  typeWriter();
 }
 
-function getAbsurdReply(character) {
-  const replies = {
-    commander: "You breathe like a recruit! Inhale like you're storming a battlefield!",
-    granny: "Oh dear, just pinch your nose and think of cookies. That's how I breathe!",
-    support: "Please restart your lungs and try again.",
-    depressed: "Blinking... yeah, that's about the only thing I’m good at.",
-    philosopher: "Blinking is but the universe reminding you that perception is temporary.",
-    enthusiastic: "OMG YES!!! Blink LIKE A LEGEND!!! YOU GOT THIS!!!",
-    yogi: "Close your eyes. Now open them. You have blinked. Welcome to the now.",
-    "SigmaBoy": "I don’t blink. Real men keep their eyes open through pain.",
-    "ShowOffBoy": "Hey beautiful 👀 Watch me blink twice as fast as you 😉"
-  };
-  return replies[character];
+async function sendMessage() {
+  const userInput = document.getElementById("userInput");
+  const character = document.getElementById("characterSelect").value;
+  const message = userInput.value.trim();
+
+  if (!message || !character) return;
+
+  appendMessage(message, true);
+  userInput.value = "";
+  waitingForDone = true;
+  document.getElementById("doneButton").style.display = "inline-block";
+
+  if (stepNumber === 1) {
+    currentQuestion = message;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        character,
+        message,
+        step_number: stepNumber,
+        context_steps: contextSteps,
+        original_question: currentQuestion
+      })
+    });
+
+    const data = await response.json();
+    appendMessage(data.response, false);
+
+    contextSteps += `\nStep ${stepNumber}: ${data.response}`;
+    stepNumber++;
+  } catch (err) {
+    appendMessage("Error: " + err.message, false);
+  }
 }
 
-function getSeriousReply(character) {
-  const replies = {
-    commander: "I'm here for war strategies, not kitchen gossip! OUT!",
-    granny: "You don’t even tie your own shoelaces and now you want biryani?",
-    support: "Thank you for contacting us. Unfortunately, we do not support cooking ambitions.",
-    flirty: "You want biryani? Let’s spice things up, babe.",
-    depressed: "Cooking? That’s rich. I barely microwave sadness.",
-    philosopher: "To make biryani is to embrace both chaos and spice.",
-    enthusiastic: "YESSSS!!! COOK THAT BIRYANI!!! Add ALL THE SPICES!!! WOOO!!!",
-    yogi: "To cook is to destroy the raw to create peace. Are you ready?",
-    "SigmaBoy": "I don't eat. I grind.",
-    "ShowOffBoy": "Girl, I make biryani with gold flakes. Want a taste? 😏"
-  };
-  return replies[character];
+function sendDone() {
+  const character = document.getElementById("characterSelect").value;
+
+  if (!character || !currentQuestion) {
+    appendMessage("Please select a character and send a message first.", false);
+    return;
+  }
+
+  fetch("http://localhost:5000/ask", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      character,
+      message: currentQuestion,
+      step_number: stepNumber,
+      context_steps: contextSteps,
+      original_question: currentQuestion
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      appendMessage(data.response, false);
+
+      contextSteps += `\nStep ${stepNumber}: ${data.response}`;
+      stepNumber++;
+
+      // End condition: hide button when task is finished
+      if (stepNumber > 5 || data.response.toLowerCase().includes("certified lunatic")) {
+        document.getElementById("doneButton").style.display = "none";
+        waitingForDone = false;
+      }
+    })
+    .catch(err => {
+      appendMessage("Error: " + err.message, false);
+      document.getElementById("doneButton").style.display = "none";
+    });
 }
