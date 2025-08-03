@@ -91,7 +91,7 @@ function sendDone() {
 
   showLoader();
 
-  fetch("http://localhost:5000/ask", {
+  fetch("https://life-lessons-101.onrender.com/ask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
