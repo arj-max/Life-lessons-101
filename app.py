@@ -71,11 +71,13 @@ def call_groq_api(prompt):
     response = requests.post(url, headers=headers, json=payload)
     response.raise_for_status()
     return response.json()["choices"][0]["message"]["content"]
+@app.route("/", methods=["GET"])
+def index():
+    return render_template("index.html")
 
 @app.route("/ask", methods=["POST"])
 @limiter.limit("5 per minute")
-def index():
-    return render_template("index.html")
+
 def ask():
     try:
         data = request.json
