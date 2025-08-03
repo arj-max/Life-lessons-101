@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -74,6 +74,8 @@ def call_groq_api(prompt):
 
 @app.route("/ask", methods=["POST"])
 @limiter.limit("5 per minute")
+def index():
+    return render_template("index.html")
 def ask():
     try:
         data = request.json
@@ -137,4 +139,5 @@ def ask():
         return jsonify({"response": f"Internal error: {str(e)}"}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
