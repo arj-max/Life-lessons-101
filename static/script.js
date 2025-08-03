@@ -60,7 +60,7 @@ async function sendMessage() {
   elements.doneButton.style.display = "inline-block";
 
   try {
-    const response = await fetch("https://life-lessons-101-1.onrender.com", {
+    const response = await fetch("https://life-lessons-101-1.onrender.com/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
