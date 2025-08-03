@@ -76,7 +76,7 @@ def index():
     return render_template("index.html")
 
 @app.route("/ask", methods=["POST"])
-@limiter.limit("5 per minute")
+@limiter.limit("50 per minute")
 
 def ask():
     try:
